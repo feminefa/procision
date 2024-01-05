@@ -15,7 +15,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  first: publicProcedure.query(({ ctx }) => {
-    return ctx.db.user.findFirst();
+  first: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.user.findMany();
   }),
 });

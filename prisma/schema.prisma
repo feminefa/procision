@@ -30,6 +30,7 @@ model Surgeon {
     SurgicalCase SurgicalCase[]
 
     @@index([name])
+    @@index([npi])
 }
 
 model Patient {
@@ -64,4 +65,5 @@ model SurgicalCase {
     icd10Code     String
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
+    
 }
