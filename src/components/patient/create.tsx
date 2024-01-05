@@ -1,8 +1,9 @@
+import { type FormInstance } from "antd";
 import { Button, InputNumber, Form, Input, Space, Select } from "antd/lib";
 
 export interface ICreatePatientProps {
     handleSubmit: (data: Record<string, unknown>) => void;
-    form: Form,
+    form: FormInstance<Record<string, unknown>>,
 }
 const { Option } = Select;
 const layout = {

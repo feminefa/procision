@@ -68,7 +68,6 @@ export class SurgicalCaseService extends BaseService {
     );
     const response = await translator.translate(payload.query);
     if (response.success) {
-      console.log("adasdfas", response.data?.items[0]?.case?.options);
       return { result: [], count: 0 };
     }
     return { result: [], count: 0 };
@@ -146,14 +145,16 @@ export class SurgicalCaseService extends BaseService {
         ((page ?? 1) - 1) * (perPage ?? 20)
       }) A LEFT JOIN Surgeon B ON A.surgeonId = B.id`,
     );
+    const countQueryRsl = await option.db.$queryRawUnsafe(
+      `${countQuery} ${query}`,
+    );
     return {
       result: await option.db.$queryRawUnsafe(
         `${resultQuery} ${query}   LIMIT ${perPage ?? 20}  OFFSET ${
           ((page ?? 1) - 1) * (perPage ?? 20)
         }) A LEFT JOIN Surgeon B ON A.surgeonId = B.id`,
       ),
-      count: (await option.db.$queryRawUnsafe(`${countQuery} ${query}`))?.[0]
-        ?.count,
+      count: Number((countQueryRsl as { count: number }[])[0]?.count ?? 0),
     };
 
     return { result: [], count: 0 };

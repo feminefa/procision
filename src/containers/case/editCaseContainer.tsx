@@ -8,12 +8,20 @@ import dayjs from 'dayjs';
 
 export default function EditCaseContainer() {
   const [form] = Form.useForm();
-  const updateCaseMutation = api.cases?.updateOne?.useMutation();
+  const updateCaseMutation = (api.cases?.updateOne as any).useMutation();
   const [notificationApi, contextHolder] = notification.useNotification();
   const params = useParams<{ id: string }>()
-  const surgeCase = api.cases.findOne.useQuery({ id: Number(params?.id ?? 0) });
+  const surgeCaseData = (api.cases.findOne as any).useQuery({ id: Number(params?.id ?? 0) });
+  const [patientQuery, setPatientQuery] = useState<string>('');
+  const [surgeonQuery, setSurgeonQuery] = useState<string>('');
+  const surgeCase = (api.cases?.create as any)?.useMutation();
+  const patients = (api.patient?.findMany as any)?.useQuery({
+    search:  patientQuery
+  });
   
-  
+  const surgeons = (api.surgeon?.findMany as any)?.useQuery({
+    search:  surgeonQuery
+  });
 
   const updateCase = (payload: {
     externalId: string;
@@ -76,7 +84,7 @@ export default function EditCaseContainer() {
   return (
     <>
       {contextHolder}
-          <CreateCase form={form} title={`Edit Case ID - ${surgeCase.data?.data?.externalId}` } handleSubmit={updateCase} />
+          <CreateCase  surgeons={surgeons?.data?.data} filterSurgeons={setSurgeonQuery} filterPatients={setPatientQuery} patients={patients?.data?.data}form={form} title={`Edit Case ID - ${surgeCaseData.data?.data?.externalId}` } handleSubmit={updateCase} />
     </>
   );
 }

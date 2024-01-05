@@ -12,8 +12,8 @@ export default function SearchCaseContainer() {
   const [cases, setCases] = useState<Record<string,unknown>[]>([]);
   const [notificationApi, contextHolder] = notification.useNotification();
   const [query, setQuery] = useState<string>('');
-  const surgCases = api.cases.search?.useQuery({ query });
-  const deleteSurgcase = api.cases.deleteOne?.useMutation();
+  const surgCases = (api.cases.search as any).useQuery({ query });
+  const deleteSurgcase = (api.cases.deleteOne as any).useMutation();
 
 
   useEffect(() => {

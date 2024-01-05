@@ -74,8 +74,9 @@ export class SurgicalCaseController extends BaseController {
       )
       .query(async ({ input, ctx }): Promise<IResponse> => {
         if (!input.perPage) input.perPage = 20;
-        if (!input.page) input.page = 1;
-        const { result, count } = await this.service.search(input, ctx);
+          if (!input.page) input.page = 1;
+          const service = this.service as SurgicalCaseService;
+          const { result, count } = await service.search(input, ctx);
         return AppResponse.success({
           data: result,
           pagination: {
@@ -102,8 +103,9 @@ export class SurgicalCaseController extends BaseController {
       .query(async ({ input, ctx }): Promise<IResponse> => {
         console.log("SERCHING.....2");
         if (!input.perPage) input.perPage = 20;
-        if (!input.page) input.page = 1;
-        const { result, count } = await this.service.search(input, ctx);
+          if (!input.page) input.page = 1;
+          const service = this.service as SurgicalCaseService;
+          const { result, count } = await service.search(input, ctx);
 
         return AppResponse.success({
           data: result,

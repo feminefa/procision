@@ -1,6 +1,6 @@
 import { publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
-import { BaseService } from "./base.service";
+import { type BaseService } from "./base.service";
 import { type PrismaClient } from "@prisma/client";
 import {
   type ProcedureRouterRecord,
@@ -25,7 +25,7 @@ export class BaseController {
       return AppResponse.success({
         data: await this.service.create(input, ctx),
       });
-    });
+    }) as AnyProcedure;
   }
 
   findOne(): AnyProcedure {

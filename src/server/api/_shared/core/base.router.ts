@@ -6,7 +6,7 @@ import {
 import { type BaseController } from "./base.controller";
 
 export interface IProcedureRouterRecord extends ProcedureRouterRecord {
-  create: AnyProcedure;
+  create: AnyProcedure | AnyRouter;
   findOne: AnyProcedure | AnyRouter;
   findMany: AnyProcedure | AnyRouter;
   updateOne: AnyProcedure | AnyRouter;
@@ -17,7 +17,7 @@ export class BaseRouter {
 
   getRoutes(): IProcedureRouterRecord {
     return {
-      create: this.controller.create(),
+      create: this.controller.create() as unknown as AnyRouter,
       findOne: this.controller.findOne(),
       findMany: this.controller.findMany(),
       updateOne: this.controller.updateOne(),

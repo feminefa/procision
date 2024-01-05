@@ -5,7 +5,7 @@ import type { ColumnsType, TablePaginationConfig,  } from 'antd/es/table';
 import Link from 'next/link';
 import { type ISurgicalCase } from '~/_shared/interface';
 import { Skeleton } from 'antd/lib';
-import { debounce } from 'lodash';
+import { type DebouncedFunc, debounce } from 'lodash';
 
 export interface SearchCasesProps {
   // onSelect: (value:  Record<string, unknown>) => void;
@@ -24,7 +24,7 @@ interface DataType extends ISurgicalCase {
   
 
 export default function SearchCases({ handleSearch, cases, loading, pagination, handleDeleteClicked }: SearchCasesProps) {
-  let searchDebounce;
+  let searchDebounce: DebouncedFunc<()=>void>;
   const [options, setOptions] = useState<SelectProps<object>['options']>([]);
   const [result, setResult] = useState<DataType[]>([]);
 

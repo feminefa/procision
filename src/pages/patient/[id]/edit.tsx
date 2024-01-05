@@ -15,11 +15,11 @@ export default function Home() {
         <div className="container flex flex-col items-center gap-4 p-8">
           <h1 className="text-2xl font-bold">Surgical Cases</h1>
 
-          <p className="text-slate-800">
+          {/* <p className="text-slate-800">
             Welcome{" "}
             {user.data?.name ?? <span className="text-slate-300">loading</span>}
             !
-          </p>
+          </p> */}
         </div>
       </main>
     </>

@@ -41,7 +41,7 @@ export const parsePrompt = async (
   const output = completion.choices?.[0];
 
   try {
-    return JSON.parse(output?.message.content || "");
+    return JSON.parse(output?.message.content ?? "");
   } catch (e) {
     console.log("PROMTERROR", e);
     return null;

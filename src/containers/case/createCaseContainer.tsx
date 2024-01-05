@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import CreateCase from "~/components/case/create";
 import { api } from "~/utils/api";
 
+
 export default function CreateCaseContainer() {
   const [form] = Form.useForm();
   const [patientQuery, setPatientQuery] = useState<string>('');
   const [surgeonQuery, setSurgeonQuery] = useState<string>('');
-  const surgeCase = api.cases?.create?.useMutation();
-  const patients = api.patient?.findMany?.useQuery({
+  const surgeCase = (api.cases?.create as any)?.useMutation();
+  const patients = (api.patient?.findMany as any)?.useQuery({
     search:  patientQuery
   });
-  const surgeons = api.surgeon?.findMany?.useQuery({
+  const surgeons = (api.surgeon?.findMany as any)?.useQuery({
     search:  surgeonQuery
   });
   const [notificationApi, contextHolder] = notification.useNotification();

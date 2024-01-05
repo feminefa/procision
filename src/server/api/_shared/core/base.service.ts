@@ -12,7 +12,7 @@ export class BaseService {
    * @returns
    */
   async create(payload: unknown, option: { db: PrismaClient }) {
-    return await option.db[this.config.schema].create({
+    return await(option.db as any)?.[this.config.schema].create({
       data: payload,
     });
   }
@@ -24,7 +24,7 @@ export class BaseService {
    * @returns
    */
   async findOne(id: unknown, option: { db: PrismaClient }) {
-    return await option.db[this.config.schema].findUnique({
+    return await(option.db as any)[this.config.schema].findUnique({
       where: { id: Number(id) },
     });
   }
@@ -48,7 +48,7 @@ export class BaseService {
     const take = Number(searchQuery.perPage ?? 20);
     const skip = (Number(searchQuery.page ?? 1) - 1) * take;
     searchQuery = omit(searchQuery, ["perPage", "search", "page"]);
-    return option.db[this.config.schema].findMany({
+    return await(option.db as any)[this.config.schema].findMany({
       where: searchQuery,
       skip,
       take,
@@ -63,7 +63,7 @@ export class BaseService {
    * @returns
    */
   async updateOne(id: number, payload: unknown, option: { db: PrismaClient }) {
-    return await option.db[this.config.schema].update({
+    return await(option.db as any)[this.config.schema].update({
       where: { id },
       data: payload,
     });
@@ -76,7 +76,7 @@ export class BaseService {
    * @returns
    */
   async deleteOne(id: number, option: { db: PrismaClient }) {
-    return await option.db[this.config.schema].delete({
+    return await(option.db as any)[this.config.schema].delete({
       where: { id },
     });
   }

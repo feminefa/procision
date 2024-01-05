@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space, Select, DatePicker, AutoComplete } from "antd/lib";
+import { Button,  Form, Input, Space, Select, DatePicker, AutoComplete, type FormInstance } from "antd/lib";
 import { type IPatient, type ISurgeon } from "~/_shared/interface";
 
 export interface CasePayloadProps {
@@ -12,7 +12,7 @@ export interface CasePayloadProps {
 }
 export interface ICreateCaseProps {
     handleSubmit: (data: CasePayloadProps) => void;
-    form: Form;
+    form: FormInstance<CasePayloadProps>;
     title?: string;
     surgeons: ISurgeon[];
     patients: IPatient[];
@@ -32,22 +32,6 @@ const layout = {
 export default function CreateCase({ handleSubmit, form, title, patients, surgeons, filterPatients, filterSurgeons }: ICreateCaseProps) {
     
 
-    
-    const onPatientSelected = (value: string) => {
-        switch (value) {
-          case 'male':
-            form.setFieldsValue({ note: 'Hi, man!' });
-            break;
-          case 'female':
-            form.setFieldsValue({ note: 'Hi, lady!' });
-            break;
-          case 'other':
-            form.setFieldsValue({ note: 'Hi there!' });
-            break;
-          default:
-        }
-    };
-    
     const onReset = () => {
         form.resetFields();
       };
@@ -83,7 +67,7 @@ export default function CreateCase({ handleSubmit, form, title, patients, surgeo
                 <Select
                         className="w-[300px]"
                         placeholder="Select a patient"
-                        onChange={onPatientSelected}
+                        //onChange={onPatientSelected}
                         allowClear
                         >
                         {surgeons?.map((s)=> <Option key={s.id} value={s.id}>{s.name} - {s.specialty}</Option>)}

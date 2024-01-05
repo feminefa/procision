@@ -6,7 +6,7 @@ import { api } from "~/utils/api";
 
 export default function CreatePatientContainer() {
   const [form] = Form.useForm();
-  const patient = api.patient?.create?.useMutation();
+  const patient = (api.patient?.create as any).useMutation();
   const [notificationApi, contextHolder] = notification.useNotification();
   const createPatient = (payload: Record<string, unknown>) => {
     delete payload.customizeGender;
