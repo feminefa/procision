@@ -94,7 +94,6 @@ export default function SearchCases({ handleSearch, cases, loading, pagination, 
   
   return (
     <>
-     
         <div className="container flex flex-col items-center gap-4 p-8">
           <h1 className="text-2xl font-bold">Surgical Cases</h1>
 

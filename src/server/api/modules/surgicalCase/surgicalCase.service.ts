@@ -84,7 +84,7 @@ export class SurgicalCaseService extends BaseService {
   ): Promise<{ result: Record<string, unknown>[]; count: number }> {
     const { query: search, perPage, page } = payload;
     const resultQuery =
-      "Select A.*, B.name surgeon from (Select S.*, P.name patient, P.externalId from SurgicalCase S  LEFT JOIN Patient P on S.patientId = P.id  where 1=1 ";
+      "Select A.*, B.name surgeon from (Select S.*, P.name patient from SurgicalCase S  LEFT JOIN Patient P on S.patientId = P.id  where 1=1 ";
     const countQuery = "Select count(*) as count from SurgicalCase where 1=1 ";
     let query = "";
     if (search.trim().length) {
@@ -94,6 +94,7 @@ export class SurgicalCaseService extends BaseService {
       );
 
       if (promptResult) {
+        console.log("PROMTPTRESUTL", promptResult);
         if (promptResult?.patientId) {
           query += `AND patientId in (select id from Patient where externalId like '%${String(
             String(promptResult.patientId).toUpperCase(),
@@ -110,7 +111,7 @@ export class SurgicalCaseService extends BaseService {
             String(promptResult.surgeonName)
               .toLowerCase()
               .replace(/dr/i, "")
-              .replace(/\\./i, ""),
+              .replace(/\./i, ""),
           ).trim()}%')`;
         }
 

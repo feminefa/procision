@@ -5,21 +5,22 @@ import { Modal, notification } from 'antd/lib';
 
 
 
-
 export default function SearchCaseContainer() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState<number>();
   const [cases, setCases] = useState<Record<string,unknown>[]>([]);
   const [notificationApi, contextHolder] = notification.useNotification();
   const [query, setQuery] = useState<string>('');
-  const surgCases = (api.cases.search as any).useQuery({ query });
-  const deleteSurgcase = (api.cases.deleteOne as any).useMutation();
+  const surgCases = api.cases.search?.useQuery({ query });
+  const deleteSurgcase = api.cases.deleteOne?.useMutation();
 
 
   useEffect(() => {
-    setCases(surgCases.data?.data ?? []);
-  }, [surgCases])
-  
+   
+    if (surgCases.data?.data) {
+      setCases(surgCases.data?.data ?? []);
+    }
+  }, [surgCases.data?.data])
 
   useEffect(() => {
     if (deleteSurgcase.error) {
